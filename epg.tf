@@ -74,8 +74,10 @@ resource "aci_application_epg" "VMM2" {
 }
 
  resource "aci_epg_to_domain" "terraform_epg_domain" {
-   application_epg_dn    = aci_application_epg.VMM1.id
+  application_epg_dn    = aci_application_epg.VMM1.id
   tdn                   = "uni/vmmp-VMware/dom-jr-dvs"
+  res_imedcy            = "pre-provision"
+  instr_imedcy          = "immediate"
 #  vmm_allow_promiscuous = "accept"
 #  vmm_forged_transmits  = "reject"
 #  vmm_mac_changes       = "accept"
@@ -84,6 +86,8 @@ resource "aci_application_epg" "VMM2" {
 resource "aci_epg_to_domain" "terraform_epg_domain" {
   application_epg_dn    = aci_application_epg.VMM2.id
   tdn                   = "uni/vmmp-VMware/dom-jr-dvs"
+  res_imedcy            = "pre-provision"
+  instr_imedcy          = "immediate"
 #  vmm_allow_promiscuous = "accept"
 #  vmm_forged_transmits  = "reject"
 #  vmm_mac_changes       = "accept"
