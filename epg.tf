@@ -24,12 +24,12 @@ resource "aci_tenant" "terraform_tenant" {
 }
 
 resource "aci_vrf" "vrf" {
-  tenant_dn = aci_tenant.tenant.id
+  tenant_dn = aci_tenant.terraform_tenant.id
   name      = var.vrf
 }
 
 resource "aci_bridge_domain" "bd1" {
-  tenant_dn = aci_tenant.tenant.id
+  tenant_dn = aci_tenant.terraform_tenant.id
   name      = var.bd1
   unicast_route = "yes"
   relation_fv_rs_ctx = aci_vrf.vrf.id
@@ -43,7 +43,7 @@ resource "aci_subnet" "subnet" {
 }
 
 resource "aci_bridge_domain" "bd2" {
-  tenant_dn = aci_tenant.tenant.id
+  tenant_dn = aci_tenant.terraform_tenant.id
   name      = var.bd2
   unicast_route = "yes"
   relation_fv_rs_ctx = aci_vrf.vrf.id
@@ -61,13 +61,13 @@ resource "aci_application_profile" "terraform_ap" {
   name      = var.app
 }
 
-resource "aci_application_epg" "terraform_epg" {
+resource "aci_application_epg" "VMM1" {
   application_profile_dn = aci_application_profile.terraform_ap.id
   name                   = var.epg1
   relation_fv_rs_bd      = aci_bridge_domain.bd1.name
 }
 
-resource "aci_application_epg" "terraform_epg" {
+resource "aci_application_epg" "VMM2" {
   application_profile_dn = aci_application_profile.terraform_ap.id
   name                   = var.epg2
   relation_fv_rs_bd      = aci_bridge_domain.bd2.name
